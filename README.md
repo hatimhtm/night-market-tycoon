@@ -6,11 +6,18 @@
 </p>
 
 <p align="center">
+  <a href="https://hatimhtm.github.io/night-market-tycoon/"><img src="https://img.shields.io/badge/▶_PLAY_NOW-CCFF00?style=for-the-badge&labelColor=1A1A1A&logoColor=1A1A1A" alt="Play Now" /></a>
   <a href="https://github.com/hatimhtm/night-market-tycoon/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/hatimhtm/night-market-tycoon/ci.yml?branch=main&style=for-the-badge&label=CI&labelColor=1A1A1A&color=CCFF00" alt="CI" /></a>
   <img src="https://img.shields.io/badge/Vite-7-1A1A1A?style=for-the-badge&logo=vite&logoColor=CCFF00" alt="Vite 7" />
   <img src="https://img.shields.io/badge/Tailwind-4-1A1A1A?style=for-the-badge&logo=tailwindcss&logoColor=CCFF00" alt="Tailwind 4" />
   <img src="https://img.shields.io/badge/Vanilla_JS-1A1A1A?style=for-the-badge&logo=javascript&logoColor=CCFF00" alt="Vanilla JS" />
   <a href="LICENSE"><img src="https://img.shields.io/badge/LICENSE-POLYFORM_NC-1A1A1A?style=for-the-badge&labelColor=1A1A1A&color=CCFF00" alt="PolyForm Noncommercial" /></a>
+</p>
+
+<p align="center">
+  <a href="https://hatimhtm.github.io/night-market-tycoon/">
+    <img src="portal-assets/1280+720.jpg" alt="Night Market Tycoon — splash" width="80%" />
+  </a>
 </p>
 
 <p align="center">
@@ -120,13 +127,13 @@ The 1.0 build (15 businesses, 7 upgrades, no achievements, no stats) shipped to 
 ### `/// LOCAL DEV`
 
 ```bash
-pnpm install     # or npm install / yarn install
-pnpm dev         # vite dev server on :5173
-pnpm build       # production bundle to dist/
-pnpm preview     # serve dist/ on :4173 to smoke-test the build
+npm install
+npm run dev       # vite dev server on :5173
+npm run build     # production bundle to dist/
+npm run preview   # serve dist/ on :4173 to smoke-test the build
 ```
 
-Requires Node 20+.
+Requires Node 20+. The build uses relative paths (`base: './'`) so the same `dist/` works on GitHub Pages, itch.io, CrazyGames, or any subdirectory deploy. Every push to `main` redeploys [the live demo](https://hatimhtm.github.io/night-market-tycoon/) via the CI workflow.
 
 ---
 
