@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Night Market Tycoon</title>
+  <meta name="description"
+    content="Build your night market empire! Buy businesses, hire managers, and become the ultimate tycoon.">
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+  <div id="app">
+    <!-- LEFT PANEL -->
+    <aside id="left-panel">
+      <div id="money-section">
+        <div id="money-label">TOTAL CASH</div>
+        <div id="money-amount">$4</div>
+        <div id="money-per-sec">$0 / sec</div>
+      </div>
+      <div id="rank-section">
+        <img id="rank-img" src="./assets/ranks/rank001.png" alt="Rank" draggable="false">
+        <div>
+          <div id="star-display"><span id="star-count">0</span> ⭐ Stars</div>
+          <div id="star-bonus">+0% Profit</div>
+        </div>
+      </div>
+      <button class="prestige-btn" id="prestige-btn" disabled>
+        PRESTIGE
+        <span class="prestige-sub-text">Earn Reputation Stars</span>
+      </button>
+      <button class="ad-btn" id="watch-ad-btn">
+        🎬 FREE CASH!
+        <span class="ad-btn-sub" id="ad-btn-sub">Watch ad for rewards</span>
+      </button>
+      <button id="mute-btn" aria-label="Toggle sound">🔊</button>
+      <button id="credits-btn" aria-label="Credits">ℹ️ Credits</button>
+      <button id="wipe-btn" aria-label="Wipe Save">WIPE SAVE</button>
+    </aside>
+
+    <!-- RIGHT PANEL -->
+    <main id="right-panel">
+      <nav id="tab-bar">
+        <button class="tab-btn active" data-tab="businesses">Businesses</button>
+        <button class="tab-btn" data-tab="managers">Managers</button>
+        <button class="tab-btn" data-tab="upgrades">Upgrades</button>
+        <button class="tab-btn" data-tab="achievements">Achievements</button>
+        <button class="tab-btn" data-tab="stats">Stats</button>
+        <button class="tab-btn" data-tab="settings">Settings</button>
+      </nav>
+      <div id="multiplier-bar">
+        <button class="mult-btn active" data-mult="1">x1</button>
+        <button class="mult-btn" data-mult="5">x5</button>
+        <button class="mult-btn" data-mult="10">x10</button>
+        <button class="mult-btn" data-mult="25">x25</button>
+        <button class="mult-btn" data-mult="max">Max</button>
+      </div>
+      <div id="tab-content" class="tab-panel"></div>
+    </main>
+  </div>
+
+  <!-- MODALS -->
+  <div id="offline-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-title">Welcome Back!</div>
+      <div class="modal-sub">While you were sleeping, your market earned</div>
+      <div id="offline-amount" class="modal-amount">$0</div>
+      <button id="offline-collect-btn" class="modal-btn">Collect!</button>
+    </div>
+  </div>
+  <div id="prestige-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-title">Prestige?</div>
+      <div class="modal-reward" id="prestige-reward-text">+0 ⭐ Stars</div>
+      <div class="modal-sub">Each star = +2% profit permanently</div>
+      <div class="modal-warning">This resets all businesses, managers & upgrades!</div>
+      <div class="modal-buttons">
+        <button id="prestige-confirm-btn" class="modal-btn">Prestige Now</button>
+        <button id="prestige-cancel-btn" class="modal-btn btn-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div id="milestone-overlay" class="hidden">
+    <div id="milestone-text"></div>
+  </div>
+  <div id="wipe-modal" class="modal-overlay hidden">
+    <div class="modal-box wipe-modal">
+      <div class="modal-title">HARD RESET?</div>
+      <div class="modal-warning">This will completely delete your save data!</div>
+      <div class="modal-sub">You will lose all cash, stars, and progress forever.</div>
+      <div class="modal-buttons">
+        <button id="wipe-confirm-btn" class="modal-btn btn-danger">YES, WIPE</button>
+        <button id="wipe-cancel-btn" class="modal-btn btn-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div id="ad-reward-modal" class="modal-overlay hidden">
+    <div class="modal-box ad-reward-box">
+      <div class="modal-title">🎬 Free Cash!</div>
+      <div class="modal-sub">Watch a short ad to earn:</div>
+      <div id="ad-reward-amount" class="modal-amount">$0</div>
+      <div class="modal-sub" style="font-size:0.72rem;color:#A9A0D0;">= 2 hours of your current income</div>
+      <div class="modal-buttons">
+        <button id="ad-watch-btn" class="modal-btn">Watch Now! 🎥</button>
+        <button id="ad-cancel-btn" class="modal-btn btn-cancel">No Thanks</button>
+      </div>
+    </div>
+  </div>
+  <div id="import-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-title">Import Save</div>
+      <div class="modal-sub">Paste your save string below. This will overwrite your current progress.</div>
+      <textarea id="import-textarea" class="modal-textarea" rows="6" placeholder="Paste your save string here…"></textarea>
+      <div class="modal-buttons">
+        <button id="import-confirm-btn" class="modal-btn">Import</button>
+        <button id="import-cancel-btn" class="modal-btn btn-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div id="toast-stack" aria-live="polite"></div>
+  <div id="credits-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-title">Credits</div>
+      <div class="credits-content">
+        <div class="credits-heading">Night Market Tycoon</div>
+        <div class="credits-line">An idle tycoon game</div>
+        <div class="credits-section">Icons Attribution</div>
+        <div class="credits-line">Icons made by <a href="https://www.flaticon.com/authors/freepik" target="_blank"
+            rel="noopener">Freepik</a> from <a href="https://www.flaticon.com" target="_blank"
+            rel="noopener">www.flaticon.com</a></div>
+        <div class="credits-line">Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" target="_blank"
+            rel="noopener">Pixel perfect</a> from <a href="https://www.flaticon.com" target="_blank"
+            rel="noopener">www.flaticon.com</a></div>
+      </div>
+      <div class="modal-buttons">
+        <button id="credits-close-btn" class="modal-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>
